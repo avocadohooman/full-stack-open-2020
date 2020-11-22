@@ -7,9 +7,9 @@ const Button = ({label, onClick}) => {
 	)
 }
 
-
 const App = () => {
 	const [selected, setSelected] = useState(anectodes[0])
+	const [votes, setVote] = useState(new Array(6).fill(0))
 
 	const nextAnectode = () => {
 		const arrayIndex = Math.floor(Math.random() * (6 - 0) + 0)
@@ -17,9 +17,17 @@ const App = () => {
 		setSelected(anectodes[arrayIndex])
 	}
 
+	const vote = () => {
+        const copy = [ ...votes]
+        copy[selected] += 1
+        setVote(copy)
+	}
+
 	return (
 		<>
 			<p>{selected}</p>
+			<p>{votes}</p>
+			<Button label = 'Vote' onClick={vote}/>
 			<Button label = 'Random Anectode' onClick={nextAnectode}/>
 		</>
 	)
