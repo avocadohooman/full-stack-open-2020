@@ -9,16 +9,45 @@ const Button = ({label, onClick}) => {
 	)
 }
 
+const Statistic = ({label, value}) => {
+
+	if (label === 'Positive') {
+		return (
+			<p>{label}: {value}% </p>
+		)
+	} else {
+		return (
+			<p>{label}: {value} </p>
+		)
+	}
+}
+
 const Statistics = ({feedback}) => {
 
-	return (
-		<div>
-			<h1>Feedback Statistics</h1>
-			<p>Good: {feedback.good} </p>
-			<p>Neutral: {feedback.neutral} </p>
-			<p>Bad: {feedback.bad} </p>
-		</div>
-	)
+	const all = feedback.good + feedback.neutral + feedback.bad
+	const average = (feedback.good * 1 + feedback.neutral * 0 + feedback.bad * -1) / 3
+	const positive = Math.floor((feedback.good / all) * 100)
+	const goodFeedback = feedback.good
+	const neutralFeedback = feedback.neutral
+	const badFeedback = feedback.bad
+
+	if (all === 0) {
+		return (
+			<p>No feedback given</p>
+		)
+	} 
+	else {
+		return (
+			<div>
+				<Statistic label="Good" value={goodFeedback}/>
+				<Statistic label="Neutral" value={neutralFeedback}/>
+				<Statistic label="Bad" value={badFeedback}/>
+				<Statistic label="All" value={all}/>
+				<Statistic label="Average" value={average}/>
+				<Statistic label="Positive" value={positive}/>
+			</div>
+		)
+	}
 }
 
 
