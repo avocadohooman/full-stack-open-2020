@@ -40,6 +40,17 @@ const Total = (props) => {
 	)
 }
 
+const Hello = (props) => {
+
+	return (
+		<>
+			<p>
+				Hello {props.name}, you are {props.age} old.
+			</p>
+		</>
+	)
+}
+
 const App = () => {
 	const course = {
 		name: 'Half Stack application development',
@@ -58,11 +69,14 @@ const App = () => {
 			}
 		]
 	}
+	const name = 'Peter'
+	const age = 30
 	return (
 		<>
 			<Header course={course.name}/>
 			<Content parts = {course.parts}/>
 			<Total totalAmountOfExercises={course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises}/>
+			<Hello name={name} age={age} />
 		</>
 	)
 }
