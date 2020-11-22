@@ -13,11 +13,17 @@ const Statistic = ({label, value}) => {
 
 	if (label === 'Positive') {
 		return (
-			<p>{label}: {value}% </p>
+			<tr>
+				<td>{label}:</td>
+				<td> {value}% </td>
+			</tr>	
 		)
 	} else {
 		return (
-			<p>{label}: {value} </p>
+			<tr>
+				<td>{label}:</td>
+				<td>{value}</td>
+			</tr>
 		)
 	}
 }
@@ -38,14 +44,16 @@ const Statistics = ({feedback}) => {
 	} 
 	else {
 		return (
-			<div>
-				<Statistic label="Good" value={goodFeedback}/>
-				<Statistic label="Neutral" value={neutralFeedback}/>
-				<Statistic label="Bad" value={badFeedback}/>
-				<Statistic label="All" value={all}/>
-				<Statistic label="Average" value={average}/>
-				<Statistic label="Positive" value={positive}/>
-			</div>
+			<table>
+				<tbody>
+					<Statistic label="Good" value={goodFeedback}/>
+					<Statistic label="Neutral" value={neutralFeedback}/>
+					<Statistic label="Bad" value={badFeedback}/>
+					<Statistic label="All" value={all}/>
+					<Statistic label="Average" value={average}/>
+					<Statistic label="Positive" value={positive}/>
+				</tbody>
+			</table>
 		)
 	}
 }
@@ -77,7 +85,10 @@ const App = () => {
 			<Button label ="Good" onClick={goodFeedback}/>
 			<Button label ="Neutral" onClick={neutraleedback}/>
 			<Button label ="Bad" onClick={badFeedback}/>
-			<Statistics feedback={feedback}/>
+			<h1>Statistics</h1>
+			<table>
+				<Statistics feedback={feedback}/>
+			</table>
 		</>
 	)
 }
