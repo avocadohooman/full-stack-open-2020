@@ -7,28 +7,55 @@ const Button = ({label, onClick}) => {
 	)
 }
 
+const Anectode = ({header, anectodes, index, votes}) => {
+
+	return (
+		<div>
+			<h1>{header}</h1>
+			<p>{anectodes[index]}</p>
+			<h4>Votes: {votes[index]}</h4>
+		</div>
+	)
+}
+
 const App = () => {
-	const [selected, setSelected] = useState(anectodes[0])
+	const [selected, setSelected] = useState(0)
 	const [votes, setVote] = useState(new Array(6).fill(0))
 
 	const nextAnectode = () => {
 		const arrayIndex = Math.floor(Math.random() * (6 - 0) + 0)
 		console.log(arrayIndex)
-		setSelected(anectodes[arrayIndex])
+		setSelected(arrayIndex)
+		showAnectodeMostVotes()
 	}
 
-	const vote = () => {
+	const voteAnectode = () => {
         const copy = [ ...votes]
         copy[selected] += 1
-        setVote(copy)
+		setVote(copy)
+		showAnectodeMostVotes()
+	}
+
+	const showAnectodeMostVotes = () => {
+		let i = 0
+		let indexMostVoted = 0
+		while (i < votes.length)
+		{
+			if (votes[i] > votes[indexMostVoted])
+			{
+				indexMostVoted = i
+			}
+			i++
+		}
+		return (indexMostVoted)
 	}
 
 	return (
 		<>
-			<p>{selected}</p>
-			<p>{votes}</p>
-			<Button label = 'Vote' onClick={vote}/>
+			<Anectode header='Selected Anectode' anectodes={anectodes} index={selected} votes={votes}/>
+			<Button label = 'Vote' onClick={voteAnectode}/>
 			<Button label = 'Random Anectode' onClick={nextAnectode}/>
+			<Anectode header='Highest Voted Anectode' anectodes={anectodes} index={showAnectodeMostVotes()} votes={votes}/>
 		</>
 	)
 }
