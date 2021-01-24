@@ -34,7 +34,7 @@ const App = (props) => {
     const checkIfExists = (props) => {
         let exists = false;
         persons.forEach(person => {
-            if (person.name === props)
+            if (person.name.toLowerCase() === props.toLowerCase())
                 exists = true;
         })
         if (exists === true)
