@@ -1,5 +1,7 @@
-import React, {useState} from 'react'
-import Contact from './contact'
+import React, {useState} from 'react';
+import Contact from './contact';
+import Filter from './filter';
+import ContactForm from './contactform';
 
 const App = (props) => {
 
@@ -53,46 +55,21 @@ const App = (props) => {
 
     const handleFilterChange = (event) => {
         searchName(event.target.value);
-        // setPersons(arr.filter(value => {
-        //     return value.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
-        // }))
     }
 
 	return (
 		<div>
         <h2>Filter</h2>
-        <form>
-            <div>
-                Search for contact:
-            </div>
-            <input
-                value={filterName}
-                onChange={handleFilterChange}
-            />
-        </form>
+            <Filter text="Search for contact: " filter={filterName} onChanges={handleFilterChange}/>
 		<h2>Phonebook</h2>
-		<form onSubmit={addContact}>
-		  <div>
-			Name: 
-            <input 
-                value={newName}
-                onChange={handleContactChange}
-            />
-		  </div>
-          <div>
-              Phone number:
-              <input
-                value={newNumber}
-                onChange={handlePhoneChange}
-              />
-          </div>
-		  <div>
-			<button type="submit">add</button>
-		  </div>
-		</form>
+            <ContactForm addContact={addContact} 
+                newName={newName} 
+                newNumber={newNumber} 
+                handleContactChange={handleContactChange} 
+                handlePhoneChange={handlePhoneChange}/>
 		<h2>Numbers</h2>
         <ul>
-        <Contact filter={filterName} contacts={persons}/>
+            <Contact filter={filterName} contacts={persons}/>
         </ul>
 	  </div>
 	)
