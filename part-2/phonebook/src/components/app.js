@@ -45,17 +45,11 @@ const App = (props) => {
             return 0
     }
 
-    const handleContactChange = (event) => {
-        setNewName(event.target.value);
-    }
+    const handleContactChange = (event) => setNewName(event.target.value);
     
-    const handlePhoneChange = (event) => {
-        setNewNumber(event.target.value);
-    }
+    const handlePhoneChange = (event) => setNewNumber(event.target.value);
 
-    const handleFilterChange = (event) => {
-        searchName(event.target.value);
-    }
+    const handleFilterChange = (event) => searchName(event.target.value);
 
 	return (
 		<div>
