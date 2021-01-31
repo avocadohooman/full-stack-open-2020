@@ -1,14 +1,27 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Contact from './contact';
 import Filter from './filter';
 import ContactForm from './contactform';
+import axios from 'axios';
 
 const App = (props) => {
 
-	const [persons, setPersons] = useState(props.contacts)
+	const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('a new name')
     const [newNumber, setNewNumber] = useState('a new phone number')
     const [filterName, searchName] = useState('');
+
+    const dataHook = () => {
+        console.log('effect');
+        axios
+            .get('http://localhost:3001/persons')
+            .then(response => {
+                console.log('promise fulfilled', response.data);
+                setPersons(response.data);
+            })
+    }
+
+    useEffect(dataHook, []);
 
     const addContact = (event) => {
         event.preventDefault();
