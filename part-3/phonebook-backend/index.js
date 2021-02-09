@@ -1,7 +1,7 @@
 const { request, response } = require('express');
 const express = require('express');
+const morgan = require('morgan');
 const app = express();
-
 
 let persons = [
     {
@@ -25,6 +25,25 @@ let persons = [
         phoneNumber: '+1 42 100 3214'
     }
 ]
+
+morgan.token('json', (req, res) => {
+    return JSON.stringify(req.body)
+})
+
+morgan.token('custom', (token, req, res) => {
+    return (
+        [
+            token.method(req, res),
+            token.url(req, res),
+            token.status(req, res),
+            token.res(req, res, 'content-length'), '-',
+            token['response-time'](req, res), 'ms',
+            token['json'](req, res)
+        ].join(' ')
+    )
+})
+
+app.use(morgan('custom'));
 
 app.use(express.json());
 
@@ -57,8 +76,8 @@ app.post('/api/persons', (request, response) => {
 
     console.log('POST Person', person);
     persons = persons.concat(person);
-    
-    response.json(person);
+    response.send(person);
+    // response.json(person);
 })
 
 app.get('/api/persons/:id', (request, response) => {
