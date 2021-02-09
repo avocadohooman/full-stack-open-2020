@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
-
+import Filter from '../components/filter';
+import Country from './countries';
 
 const App = (props) => {
     const [countries, setCountries] = useState([]);
-    const [countryFilter, searchCountry] = useState('GE');
+    const [countryFilter, searchCountry] = useState('');
 
     const dataHook = () => {
         console.log('effect hook called');
@@ -18,17 +19,20 @@ const App = (props) => {
 
     useEffect(dataHook, []);
 
+    const handleFilterChanges = (event) => {
+        return (
+            searchCountry(event.target.value),
+            dataHook()
+        )
+    }
+
     return (
         <div>
-            <h1>{countries.map(country => 
-                <li key={country.id}>
-                    {country.name}
-                </li>
-                )}
-            </h1>
+            <h3>Filter</h3>
+            <Filter text="search for countries: " filter={countryFilter} onChanges={handleFilterChanges} />
+            <Country countries={countries} />
         </div>
     )
 }
-
 
 export default App;
