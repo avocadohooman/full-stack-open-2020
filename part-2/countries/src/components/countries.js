@@ -1,6 +1,26 @@
-import React from 'react'
+import {React, useState} from 'react'
+import CountryInfo from './country_info'
 
-const Country = ({countries}) => {
+const Countries = ({countries, weather, setWeather}) => {
+    const [state, setState] = useState('show more')
+    const [countryInfo, setInfo] = useState('')
+
+    const showCountryInfo = (e, country) => {
+        e.preventDefault()
+        console.log('EVENT', country);
+        if (state === 'show more')
+        {
+            return (
+                setState('show less'),
+                setInfo(country)
+            )
+        }
+        else
+            return (
+                setState('show more')
+            ) 
+    }
+
     if (countries.length > 10) {
         return (
             <>
@@ -13,26 +33,19 @@ const Country = ({countries}) => {
                 <h4>{countries.map(country => 
                     <li key={country.alpha2Code}>
                         {country.name}
+                        {state === 'show more' && <button value={country} onClick={((e) => showCountryInfo(e, country))}>show</button>}
+                        {state === 'show less' && <button value={country} onClick={((e) => showCountryInfo(e, country))}>show less</button>}
                     </li>
                     )}
                 </h4>
+                {state === 'show less' && <CountryInfo country={countryInfo} weather={weather} setWeather={setWeather}/>}
             </>
         )
     } else if (countries.length === 1) {
         return (
             <>
-            <h1>{ countries[0]?.name }</h1>
-            <h3>Capital:</h3> <p>{countries[0]?.capital}</p>
-            <h3>Population:</h3> <p>{countries[0]?.population} people</p>
-            <h3>Languages:</h3> <p>{countries[0]?.languages.map(language =>
-                <li key={language.iso639_1}>
-                    {language.name}
-                </li>
-            )}</p>
-            <h3>National Flag: 
-                <p><img src={countries[0].flag} style={{width: '150px'}}></img></p>
-            </h3>
-        </>
+                <CountryInfo country={countries[0]} weather={weather} setWeather={setWeather}/>
+            </>
         )
     } else {
         return (
@@ -44,4 +57,4 @@ const Country = ({countries}) => {
 }
 
 
-export default Country
+export default Countries
