@@ -1,8 +1,10 @@
+require('dotenv').config()
 const { request, response } = require('express');
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
 const cors = require('cors')
+const Contact = require('./models/contacts')
 
 app.use(cors())
 app.use(express.static('build'))
@@ -71,16 +73,16 @@ app.post('/api/persons', (request, response) => {
             error: 'name already exists in the database'
         })
     }
-
-    const person = {
-        id: generateId(request.body.name),
+    const person = new Contact({
         name: body.name,
         phoneNumber: body.phoneNumber
-    }
+    })
 
     console.log('POST Person', person);
-    persons = persons.concat(person);
-    response.send(person);
+
+    person.save().then(savedContact => {
+        response.json(savedContact);
+    })
     // response.json(person);
 })
 
@@ -96,7 +98,9 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
-    response.json(persons);
+    Contact.find({}).then(contact => {
+        response.json(contact);
+    })
 })
 
 app.get('/info', (request, response) => {
@@ -109,10 +113,21 @@ app.get('/info', (request, response) => {
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id);
-    persons = persons.filter(person => person.id !== id);
-
-    response.status(204).end();
+    console.log('GET NOTE BY ID', request.params.id);
+    // persons = persons.filter(person => person.id !== id);
+    Contact.findById(request.params.id)
+        .then(contact => {
+            if (contact) {
+                response.json(contact);
+                response.status(204).end();
+            } else {
+                response.status(404).end();
+            }
+        })
+        .catch(error => {
+            console.log(`error finding note with ID ${request.params.id}`, error.message);
+            response.status(500).end()
+        })
 })
 
 const PORT = process.env.PORT || 3002;
