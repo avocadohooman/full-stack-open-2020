@@ -27,30 +27,25 @@ const App = (props) => {
         event.preventDefault();
         console.log('button clicked', event.target);
 
-        if (newName === '')
-            alert('The name must be at least one character long')
-        else {
-            const contactObject = {
-                id: Math.floor(Math.random()),
-                name: newName,
-                phoneNumber: newNumber,
-            }
-            if (!checkIfExists(contactObject))
-            {
-                api
-                    .addContact(contactObject)
-                    .then(response => {
-                        console.log('POST Promise fulfilled', response.data);
-                        setPersons(persons.concat(response.data))
-                    })
-                // setPersons(persons.concat(contactObject));
-            }
-            // else
-            //     alert(newName + ' already exists');
-            setNewName('');
-            setNewNumber('');
+        const contactObject = {
+            id: Math.floor(Math.random()),
+            name: newName,
+            phoneNumber: newNumber,
         }
-    }
+            api
+                .addContact(contactObject)
+                .then(response => {
+                    console.log('POST Promise fulfilled', response.data);
+                    setPersons(persons.concat(response.data))
+                })
+                .catch(error => {
+                    console.log("Error", error.response.data);
+                    return window.alert(`Error: ${error.message}`)
+                })
+                // setPersons(persons.concat(contactObject));
+        setNewName('');
+        setNewNumber('');
+        }
 
     const checkIfExists = (props) => {
         let update = false;

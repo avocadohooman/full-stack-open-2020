@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const app = express();
 const cors = require('cors')
 const Contact = require('./models/contacts');
-const { nextTick } = require('process');
 
 app.use(cors())
 app.use(express.static('build'))
@@ -36,6 +35,8 @@ const errorHandler = (error, request, response, next) => {
 
     if (error.name === 'CastError') {
         return response.status(400).send({error: error.message})
+    } else if (error.name === 'ValidationError') {
+        return response.status(400).send({error: error.properties.message})
     }
     next(error);
 }
@@ -46,11 +47,6 @@ app.post('/api/persons', (request, response, next) => {
     const body = request.body;
     console.log('POST body', body);
 
-    if (!body.name || !body.phoneNumber) {
-        return response.status(400).json({
-            error: 'name and phone numbers are missing'
-        })
-    }
     const person = new Contact({
         name: body.name,
         phoneNumber: body.phoneNumber
@@ -58,9 +54,10 @@ app.post('/api/persons', (request, response, next) => {
     console.log('POST Person', person);
 
     person.save()
-        .then(savedContact => {
-        response.json(savedContact);
-    })
+        .then(savedContact => savedContact.toJSON())
+        .then (savedFormattedContact => {
+            response.json(savedFormattedContact);
+        })
         .catch(error => next(error))
 })
 
