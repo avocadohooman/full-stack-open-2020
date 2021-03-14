@@ -1,20 +1,23 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog');
 
-blogsRouter.get('/', (request, response, next) => {
-    Blog
-      .find({})
-      .then(blogs => {
-        response.json(blogs)
-      })
-      .catch(error => next(error))
+blogsRouter.get('/', async (request, response) => {
+
+    const blogs = await Blog.find({})
+    response.json(blogs);
 })
 
 
-blogsRouter.post('/', (request, response, next) => {
+blogsRouter.post('/', async (request, response) => {
     const body = request.body;
-    console.log('body?', body.length);
 
+    if (!body.likes) {
+        body.likes = 0;
+    }
+
+    if (!body.title || !body.url) {
+        return response.status(400).json({error: "Missing Title / URL"});
+    }
     const blog = new Blog({
         title: body.title,
         author: body.author,
@@ -22,13 +25,8 @@ blogsRouter.post('/', (request, response, next) => {
         likes: body.likes
     })
 
-    console.log('blog?', blog);
-    blog
-      .save()
-      .then(result => {
-        response.status(201).json(result)
-      })
-      .catch(error => next(error))
+    const savedBlog = await blog.save()
+    response.json(savedBlog)
 })
 
 module.exports = blogsRouter
