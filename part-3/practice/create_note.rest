@@ -1,0 +1,19 @@
+get http://localhost:3001/api/notes/ 
+
+###
+
+get http://localhost:3001/api/notes/603107bd67953a0c22506b4f
+
+###
+
+post http://localhost:3001/api/notes/ 
+
+Content-Type: application/json
+{
+    "content": "A Test Note",
+    "important": true
+}
+
+###
+
+delete http://localhost:3001/api/notes/60325d3c8712492cf8567484 
