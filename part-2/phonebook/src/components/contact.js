@@ -1,22 +1,22 @@
 import React from 'react'
 
 
-const Contact = ({filter, contacts, deleteContact}) => {
+const Contact = ({filter, contacts}) => {
 
-    return (
-        <div>
-            {contacts.filter(contact => 
-                contact.name?.toLowerCase().includes(filter.toLowerCase()))
-                .map(contact =>
-                    <li key={contact.id}>
-                        {contact.name}, {contact.phoneNumber}
-                        <button value={contact.id} onClick={((e) => deleteContact(e, contact.id))}>Delete</button>
-                    </li>
-            )
-            }
-        </div>
-    )
-
+    if (contacts !== undefined && filter !== undefined) {
+        return (
+            <div>
+                {contacts.filter(contact => 
+                    contact.name?.toLowerCase().includes(filter.toLowerCase()))
+                    .map(contact =>
+                        <li key={contact.id}>
+                            {contact.name}, {contact.phoneNumber}
+                        </li>
+                )
+                }
+            </div>
+        )
+    }
 }
 
 export default Contact

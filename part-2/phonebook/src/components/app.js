@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import Contact from './contact';
 import Filter from './filter';
 import ContactForm from './contactform';
+import axios from 'axios';
 import api from '../services/api';
-
 const App = (props) => {
 
 	const [persons, setPersons] = useState([])
@@ -13,8 +13,8 @@ const App = (props) => {
 
     const dataHook = () => {
         console.log('effect');
-        api
-            .getAll()
+        axios
+            .get('http://localhost:3001/persons')
             .then(response => {
                 console.log('promise fulfilled', response.data);
                 setPersons(response.data);
@@ -27,76 +27,40 @@ const App = (props) => {
         event.preventDefault();
         console.log('button clicked', event.target);
 
-        const contactObject = {
-            id: Math.floor(Math.random()),
-            name: newName,
-            phoneNumber: newNumber,
+        if (newName === '')
+            alert('The name must be at least one character long')
+        else {
+            if (!checkIfExists(newName))
+            {
+                const contactObject = {
+                    id: persons.length + 1,
+                    name: newName,
+                    phoneNumber: newNumber,
+                }
+                api
+                    .addContact()
+                    .then(response => {
+                        setPersons(persons.concat(response.data))
+                    })
+            //    setPersons(persons.concat(contactObject));
+            }
+            else
+                alert(newName + ' already exists');
+            setNewName('');
+            setNewNumber('');
         }
-            api
-                .addContact(contactObject)
-                .then(response => {
-                    console.log('POST Promise fulfilled', response.data);
-                    setPersons(persons.concat(response.data))
-                })
-                .catch(error => {
-                    console.log("Error", error.response.data);
-                    return window.alert(`Error: ${error.message}`)
-                })
-                // setPersons(persons.concat(contactObject));
-        setNewName('');
-        setNewNumber('');
-        }
+    }
 
     const checkIfExists = (props) => {
-        let update = false;
         let exists = false;
-        persons.forEach(person => {
-            if (person.name?.toLowerCase() === props.name.toLowerCase()) {
+        persons?.forEach(person => {
+            if (person.name?.toLowerCase() === props.toLowerCase())
                 exists = true;
-                if (updateContact(person.id))
-                    update = true;
-            }
         })
-        console.log("UPDATE && EXISTS", update, exists);
-        if (update === true)
-            return 1
-        else if (exists === true && update === false)
+        if (exists === true)
             return 1
         else 
             return 0
-    }
-
-    const updateContact = (existingId) => {
-        if (window.confirm(`${newName} is already in the phonebook, replace old number with new one?`)) {
-            const contactObject = {
-                name: newName,
-                phoneNumber: newNumber,
-                id: existingId
-            }
-            api
-                .updateContact(existingId, contactObject)
-                .then(response => {
-                    console.log('PUT promise fulfilled', response.data);
-                    dataHook();
-                })
-            return 1
-        } else {
-            return 0
-        }
-
-    }
-
-    const deleteContact = (event, data) => {
-		event.preventDefault()
-        console.log('button clicked', event.target)
-        if (window.confirm('Are you sure you want to delete the contact?')) {
-            api
-            .deleteContact(data)
-            .then (response => {
-                console.log("DELETE promise fulfilled", response.data);
-                dataHook()
-            })
-        }
     }
 
     const handleContactChange = (event) => setNewName(event.target.value);
@@ -117,7 +81,7 @@ const App = (props) => {
                 handlePhoneChange={handlePhoneChange}/>
 		<h2>Numbers</h2>
         <ul>
-            <Contact filter={filterName} contacts={persons} deleteContact={deleteContact}/>
+            { persons.length > 0 && <Contact filter={filterName} contacts={persons}/>}
         </ul>
 	  </div>
 	)
