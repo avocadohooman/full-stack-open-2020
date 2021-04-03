@@ -7,11 +7,12 @@ get http://localhost:3001/api/notes/603107bd67953a0c22506b4f
 ###
 
 post http://localhost:3001/api/notes/ 
-
 Content-Type: application/json
+
 {
-    "content": "A Test Note",
-    "important": true
+    "content": "A Test Note and another test note",
+    "important": true,
+    "userId": "60684b6a1a031324a48ad192"
 }
 
 ###
