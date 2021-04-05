@@ -6,14 +6,15 @@ post http://localhost:3003/api/blogs/
 content-type: application/json
 
 {
-    "title": "Test2",
+    "title": "Test5",
     "author": "GM",
     "url": "none",
-    "likes": 233
+    "likes": 233,
+    "userId": "606adce5787a1877c0afc2c5"
 }
 
 ###
-delete http://localhost:3003/api/blogs/60439b0e37e6b89c625e7d41
+delete http://localhost:3003/api/blogs/604e4919e9c8f456ef394485
 
 ###
 
@@ -21,8 +22,26 @@ put http://localhost:3003/api/blogs/604e4919e9c8f456ef394485
 content-type: application/json
 
 {
-    "title": "TEST3",
+    "title": "TEST4",
     "author": "GM",
     "url": "none",
     "likes": 233
 }
+
+###
+
+get http://localhost:3003/api/users/ 
+
+###
+
+post http://localhost:3003/api/users/ 
+Content-Type: application/json
+
+{
+    "username": "gerry",
+    "name": "Megauser",
+    "password": "satasss"
+}
+
+###
+

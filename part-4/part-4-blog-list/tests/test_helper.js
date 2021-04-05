@@ -1,4 +1,6 @@
 const Blog = require('../models/blog');
+const User = require('../models/user');
+
 const initialeBlogs = [
     {
         title: "Canonical string reduction",
@@ -68,10 +70,16 @@ const findBlogInDb = async (toFind) => {
     return blog.toJSON();
 }
 
+const usersInDb = async() => {
+    const users = await User.find({})
+    return users.map(u => u.toJSON())
+}
+
 module.exports = {
     initialeBlogs,
     nonExistingId,
     blogsInDb,
-    findBlogInDb
+    findBlogInDb,
+    usersInDb
   }
   
