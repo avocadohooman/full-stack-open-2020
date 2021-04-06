@@ -2,10 +2,11 @@ get http://localhost:3001/api/users/
 
 ###
 
-post http://localhost:3001/api/login/ 
+post http://localhost:3001/api/users/ 
 Content-Type: application/json
 
 {
+    "notes": [],
     "username": "gerry",
     "name": "Megauser",
     "password": "sardinen"

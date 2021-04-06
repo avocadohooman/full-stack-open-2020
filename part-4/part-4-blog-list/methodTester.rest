@@ -14,7 +14,7 @@ content-type: application/json
 }
 
 ###
-delete http://localhost:3003/api/blogs/604e4919e9c8f456ef394485
+delete http://localhost:3003/api/blogs/606b1bafe1719789ee9a4c30
 
 ###
 
@@ -45,3 +45,10 @@ Content-Type: application/json
 
 ###
 
+post http://localhost:3003/api/login/ 
+Content-Type: application/json
+
+{
+    "username": "gerry",
+    "password": "satasss"
+}

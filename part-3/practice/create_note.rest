@@ -8,6 +8,7 @@ get http://localhost:3001/api/notes/603107bd67953a0c22506b4f
 
 post http://localhost:3001/api/notes/ 
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdlcnJ5IiwiaWQiOiI2MDY4NGQ0MDUzN2YxODI1YTMwMDRkNzciLCJpYXQiOjE2MTc2MDk1MzV9.4QDSywWEK9lDawNsj7iy645bYa0sz9Fbbkpuk8AaqsQ
 
 {
     "content": "A Test Note and another test note",

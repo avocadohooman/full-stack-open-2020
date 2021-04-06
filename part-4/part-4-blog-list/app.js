@@ -5,6 +5,7 @@ const config = require('./utils/config');
 const logger = require('./utils/logger');
 const blogsRouter = require('./controllers/blogs');
 const userRouter = require('./controllers/users');
+const loginRouter = require('./controllers/login');
 const middleware = require('./utils/middleware');
 const mongoose = require('mongoose');
 
@@ -25,5 +26,6 @@ app.use(middleware.requestLogger);
 
 app.use('/api/blogs', blogsRouter);
 app.use('/api/users', userRouter);
+app.use('/api/login', loginRouter);
 
 module.exports = app
