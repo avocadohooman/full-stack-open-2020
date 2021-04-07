@@ -144,7 +144,7 @@ const App = (props) => {
                 ? loginForm()
                 : 
                 <div>
-                <p>{user.name} looded-in</p>
+                <p>{user.name} logged in</p>
                 {noteForm()}
                 <button onClick={logout}>Logout</button>
                 </div>
