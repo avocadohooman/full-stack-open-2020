@@ -4,6 +4,7 @@ const app = require('../app');
 const api = supertest(app);
 const Blog = require('../models/blog');
 const helper = require('./test_helper');
+const jwt = require('jsonwebtoken');
 
 beforeEach(async () => {
     await Blog.deleteMany({});
@@ -33,6 +34,25 @@ describe ('Testing GET api calls', () => {
 })
 
 describe ('Testing POST api calls', () => {
+    let token = null
+    beforeAll(async () => {
+      await User.deleteMany({})
+  
+      const passwordHash = await bcrypt.hash('password', 10)
+      const user = new User({ username: 'jane', passwordHash })
+  
+      await user.save()
+  
+      // Login user to get token
+      await api
+        .post('/api/login')
+        .send({ username: 'jane', password: 'password' })
+        .then((res) => {
+          return (token = res.body.token)
+        })
+  
+      return token
+    })
     test('a blog can be added', async () => {
         const newBlog = {
             title: "The Guide For API Testing",
@@ -43,6 +63,7 @@ describe ('Testing POST api calls', () => {
 
         await api
             .post('/api/blogs/')
+            .set('Authorization', `Bearer ${token}`)
             .send(newBlog)
             .expect(200)
             .expect('Content-Type', /application\/json/)
@@ -63,6 +84,7 @@ describe ('Testing POST api calls', () => {
 
         await api
             .post('/api/blogs/')
+            .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvZ2luVGVzdCIsImlkIjoiNjA2YzFhOTkxMGMxNTc5NjkyZWZlOTk4IiwiaWF0IjoxNjE3NzgyMjAyLCJleHAiOjE2MTc3ODQwMDJ9.EL1nJQ46wo7OfQGu_TT_PR-d5ugwlG-JQ_9xWn8OGEc')
             .send(newBlog)
             .expect(200)
             .expect('Content-Type', /application\/json/)
@@ -78,6 +100,7 @@ describe ('Testing POST api calls', () => {
 
         await api
             .post('/api/blogs/')
+            .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvZ2luVGVzdCIsImlkIjoiNjA2YzFhOTkxMGMxNTc5NjkyZWZlOTk4IiwiaWF0IjoxNjE3NzgyMjAyLCJleHAiOjE2MTc3ODQwMDJ9.EL1nJQ46wo7OfQGu_TT_PR-d5ugwlG-JQ_9xWn8OGEc')
             .send(newBlog)
             .expect(400)
         

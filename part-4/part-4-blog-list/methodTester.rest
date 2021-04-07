@@ -7,7 +7,7 @@ content-type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvZ2luVGVzdCIsImlkIjoiNjA2YzFhOTkxMGMxNTc5NjkyZWZlOTk4IiwiaWF0IjoxNjE3NzgyMjAyLCJleHAiOjE2MTc3ODQwMDJ9.EL1nJQ46wo7OfQGu_TT_PR-d5ugwlG-JQ_9xWn8OGEc
 
 {
-    "title": "Test5",
+    "title": "FUCK",
     "author": "GM",
     "url": "none",
     "likes": 233,
@@ -15,7 +15,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvZ
 }
 
 ###
-delete http://localhost:3003/api/blogs/606c1f8ffcd3219847fd5710
+delete http://localhost:3003/api/blogs/606d68bf2defe7acafda35ad
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvZ2luVGVzdCIsImlkIjoiNjA2YzFhOTkxMGMxNTc5NjkyZWZlOTk4IiwiaWF0IjoxNjE3NzgyMjAyLCJleHAiOjE2MTc3ODQwMDJ9.EL1nJQ46wo7OfQGu_TT_PR-d5ugwlG-JQ_9xWn8OGEc
 
 ###
