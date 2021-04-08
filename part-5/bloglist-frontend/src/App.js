@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import BlogForm from './components/blogForm'
+import Togglable from './components/toggle'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
-  const [newTitle, setTitle] = useState('')
-  const [newAuthor, setAuthor] = useState('')
-  const [newUrl, setUrl] = useState('')
 
 
   const getAllBlogsHook = () => {
@@ -49,19 +48,10 @@ const App = () => {
     }
   }
 
-  const handleBlogCreation = async (event) => {
-      event.preventDefault()
-      console.log('creating a new blog', newTitle, newAuthor, newUrl)
-      const newBlog = {
-          title: newTitle,
-          author: newAuthor,
-          url: newUrl
-      }
+  const handleBlogCreation = async (newBlog) => {
+      console.log('creating a new blog', newBlog)
       try {
           await blogService.create(newBlog)
-          setTitle('')
-          setUrl('')
-          setAuthor('')
           getAllBlogsHook()        
       } catch {
           console.log('blog creation error')
@@ -92,36 +82,11 @@ const App = () => {
   )
 
   const createForm = () => (
-      <form onSubmit={handleBlogCreation}>
-          <div>
-              title:
-              <input
-              type="text"
-              value={newTitle}
-              name="Title"
-              onChange={({target}) => setTitle(target.value)}
-              />
-          </div>
-          <div>
-              author:
-              <input
-              type="text"
-              value={newAuthor}
-              name="Author"
-              onChange={({target}) => setAuthor(target.value)}
-              />
-          </div>
-          <div>
-              url:
-              <input
-              type="text"
-              value={newUrl}
-              name="URL"
-              onChange={({target}) => setUrl(target.value)}
-              />
-          </div>
-          <button type="submit">create</button>
-      </form>
+    <Togglable buttonLabel="new blog">
+        <BlogForm
+            createBlog={handleBlogCreation}
+        />
+    </Togglable>
   )
 
   const logout = () => {
