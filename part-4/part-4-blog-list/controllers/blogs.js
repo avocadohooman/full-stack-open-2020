@@ -53,17 +53,19 @@ blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) =
     }
 })
 
-blogsRouter.put('/:id', async(request, response) => {
+blogsRouter.put('/:id', async (request, response) => {
     const body = request.body
 
+    console.log("Body", body, "ID", body.id)
     const blog = {
+        id: body.id,
         title: body.title,
         author: body.author,
         url: body.url,
-        likes: body.likes
+        likes: body.likes,
     }
 
-    await Blog.findByIdAndUpdate(request.params.id, blog, {new: true});
+    await Blog.findByIdAndUpdate(request.body.id, blog, {new: true});
 })
 
 module.exports = blogsRouter 

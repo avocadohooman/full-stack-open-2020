@@ -12,21 +12,21 @@ const App = () => {
   const [username, setUsername] = useState('')
 
 
-  const getAllBlogsHook = () => {
+  const getAllBlogsHook = async () => {
       console.log('Getting all blogs');
-    blogService.getAll().then(blogs =>
+        await blogService.getAll().then(blogs =>
         setBlogs( blogs )
       )  
   }
 
   useEffect(getAllBlogsHook, []);
 
-  useEffect(() => {
+  useEffect(async () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogUser')
     if (loggedUserJSON) {
         const user = JSON.parse(loggedUserJSON)
         setUser(user)
-        blogService.setToken(user.token)
+        await blogService.setToken(user.token)
     }
   }, [])
 
@@ -52,10 +52,30 @@ const App = () => {
       console.log('creating a new blog', newBlog)
       try {
           await blogService.create(newBlog)
-          getAllBlogsHook()        
+          await getAllBlogsHook()        
       } catch {
           console.log('blog creation error')
       }
+  }
+
+  const handleLike = async (blog) => {
+      console.log('adding like', blog);
+      try {
+        await blogService.update(blog)
+        getAllBlogsHook()        
+      } catch {
+        console.log('update error')
+      }
+  }
+
+  const handleDelete = async (blog) => {
+    console.log('deleting blog', blog)
+    try {
+        await blogService.deleteBlog(blog)
+        getAllBlogsHook();
+    } catch {
+
+    }
   }
   const loginForm = () => (
       <form onSubmit={handleLogin}>
@@ -107,8 +127,10 @@ const App = () => {
       <h2>{user.name}'s Blogs</h2>
       <button onClick={logout}>Logout</button>
       {createForm ()}
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+      {blogs.sort(function(a, b) {
+            return b.likes - a.likes
+        }).map(blog =>
+        <Blog key={blog.id} blog={blog} handleLike={handleLike} handleDelete={handleDelete}/>
       )}
     </div>
   )
