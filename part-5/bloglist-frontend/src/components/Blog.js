@@ -46,16 +46,16 @@ const Blog = ({blog, handleLike, handleDelete}) => {
 
     if (visible) {
         return (
-            <div style={blogStyle}>
-                <div>
-                    Title: {blog.title} Author: {blog.author} <button onClick={toggleVisibility}>show more</button>
+            <div className="blog" style={blogStyle}>
+                <div id="blogLess">
+                    Title: {blog.title} Author: {blog.author} <button id="button-more" onClick={toggleVisibility}>show more</button>
                 </div>
             </div>  
         )
     } else if (!visible) {
         return (
-            <div style={blogStyle}>
-                <div>
+            <div id="blogMore" style={blogStyle}>
+                <div >
                     Title: {blog.title} Author: {blog.author} <button onClick={toggleVisibility}>show less</button>
                 </div>
 
@@ -64,9 +64,9 @@ const Blog = ({blog, handleLike, handleDelete}) => {
                 </div>
 
                 <div>
-                    Likes: {blog.likes} <button onClick={addLike}>like</button>
+                    Likes: {blog.likes} <button id="button-like" onClick={addLike}>like</button>
                 </div>
-                <button onClick={deleteBlog}>Delete</button>
+                <button id="button-delete" onClick={deleteBlog}>Delete</button>
             </div> 
         )
     }
