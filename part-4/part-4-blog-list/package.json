@@ -8,7 +8,8 @@
     "dev": "cross-env NODE_ENV=development node_modules/.bin/nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --verbose",
     "test-user": "npm test -- tests/user_api.test.js --detectOpenHandles",
-    "test-api": "npm test -- tests/blog_api.test.js --detectOpenHandles"
+    "test-api": "npm test -- tests/blog_api.test.js --detectOpenHandles",
+    "start:test": "cross-env NODE_ENV=development node index.js"
   },
   "author": "",
   "license": "ISC",

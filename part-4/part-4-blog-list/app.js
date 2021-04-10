@@ -25,6 +25,11 @@ app.use(express.json());
 app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);
 
+if (process.env.NODE_END = 'development') {
+    const testingRouter = require('./controllers/cypressTest')
+    app.use('/api/testing', testingRouter);
+}
+
 app.use('/api/blogs', blogsRouter);
 app.use('/api/users', userRouter);
 app.use('/api/login', loginRouter);
