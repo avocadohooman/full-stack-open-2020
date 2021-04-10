@@ -5,6 +5,7 @@
   "description": "",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
+    "start-test": "NODE_ENV=development node index.js",
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "dev": "NODE_ENV=development nodemon index.js",
     "build:ui": "rm -rf build && cd ../../part-2/practice/part-2-practice/ && npm run build --prod && cp -r build ../../../part-3/practice/",
