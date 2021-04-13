@@ -1,27 +1,24 @@
 {
-  "name": "part-2-practice",
+  "name": "routed-anecdotes",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/user-event": "^12.2.2",
-    "axios": "^0.21.1",
-    "cors": "^2.8.5",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.7.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4"
+    "react-scripts": "4.0.2",
+    "web-vitals": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "json-server -p3001 --watch db.json",
-    "cypress:open": "cypress open",
-    "test:e2e": "cypress run"
+    "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -39,11 +36,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.6",
-    "cypress": "^7.0.1",
-    "json-server": "^0.16.3"
   }
 }

@@ -1,11 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react'
 import Note from './Note'
-import axios from 'axios'
 import noteService from '../services/notes'
 import loginService from '../services/login';
 import LoginForm from './loginForm';
 import Togglable from './toggle';
 import NoteForm from './noteForm';
+import {
+    BrowserRouter as Router,
+    Switch, Route, Link
+} from 'react-router-dom';
 
 const App = (props) => {
     
@@ -17,7 +20,6 @@ const App = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
-    const [loginVisible, setLoginVisible] = useState(false)
 
     useEffect(() => {
         noteService
@@ -114,6 +116,7 @@ const App = (props) => {
                 setNotes(notes.filter(n => n.id !== id))
             })
     }
+    
 
 	return (
 		<div>
