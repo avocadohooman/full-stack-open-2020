@@ -1,0 +1,16 @@
+get http://localhost:3001/api/patients
+
+###
+
+post http://localhost:3001/api/patients
+content-type: application/json
+
+{
+    "name": "Gerhard",
+    "dateOfBirth": "18.12.1989",
+    "ssn": "1",
+    "gender": "male",
+    "occupation": "software engineer"
+}
+
+###
