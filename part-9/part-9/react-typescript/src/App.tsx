@@ -6,6 +6,7 @@ import { Course } from './models/courseModel';
 
 const App = () => {
   const courseName = "Half Stack application development";
+  
   const courseParts: Course[] = [
     {
       name: "Fundamentals",
