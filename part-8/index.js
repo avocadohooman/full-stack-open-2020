@@ -97,6 +97,15 @@ let authors = [
         getAllAuthors: [Author!]!
     }
 
+    type Mutation {
+      addBook (
+        title: String!,
+        author: String!
+        published: Int!,
+        genres: [String!]!
+      ): Book
+    }
+
     type Book {
         title: String!
         published: Int!
@@ -137,6 +146,23 @@ let authors = [
             const amountOfBooks = books.filter(b => b.author === root.name)
             return amountOfBooks.length;
         }
+    },
+    Mutation: {
+      addBook: (root, args) => {
+        if (!authors.find(a => a.name === args.author)) {
+          const newAuthor = {name: args.author, id: uuid()};
+          authors = authors.concat(newAuthor);
+        }
+        if (books.find(b => b.title === args.title)) {
+          throw new UserInputError('Title already exists', {
+            invalidArgs: args.title,
+          })
+        }
+        const newBook = {...args, id: uuid()};
+        console.log('new book', newBook);
+        books = books.concat(newBook);
+        return newBook;
+      }
     }
   }
   
