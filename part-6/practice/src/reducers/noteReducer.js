@@ -1,10 +1,30 @@
 import { ACTIONS } from '../index';
 
+const generateId = () => Math.floor(Math.random() * Math.PI * 10000);
+
+export const createNote = (content) => {
+    return {
+      type: ACTIONS.NEW_NOTE,
+      data: {
+        content,
+        important: false,
+        id: generateId()
+      }
+    }
+  }
+  
+  export const toggleImportanceOf = (id) => {
+    return {
+        type: ACTIONS.TOGGLE,
+        data: { id }
+    }
+}
+
 const noteReducer = (notes = [], action) => {
     switch (action.type) {
         case ACTIONS.NEW_NOTE:
             return [...notes, action.data];
-        case ACTIONS.UPDATE_NOTE:
+        case ACTIONS.TOGGLE:
             const id = action.data.id;
             const noteToChange = notes.find(note => note.id === id);
             const changedNote = {...noteToChange, important: !noteToChange.important};
