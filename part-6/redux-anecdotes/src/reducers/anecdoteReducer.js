@@ -1,5 +1,4 @@
 import { ACTIONS } from "../App";
-
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -22,6 +21,7 @@ const asObject = (anecdote) => {
 const initialState = anecdotesAtStart.map(asObject)
 
 export const voteOf = (id) => {
+
   return {
     type: ACTIONS.VOTE,
     data: { id },
@@ -39,7 +39,7 @@ export const createNew = (newContent) => {
   }
 }
 
-const reducer = (anecdotes = initialState, action) => {
+const anectodeReducer = (anecdotes = initialState, action) => {
   console.log('state now: ', anecdotes)
   console.log('action', action)
   switch (action.type) {
@@ -56,4 +56,4 @@ const reducer = (anecdotes = initialState, action) => {
   }
 }
 
-export default reducer;
+export default anectodeReducer;
