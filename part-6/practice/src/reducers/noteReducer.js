@@ -13,7 +13,7 @@ export const createNote = (content) => {
     }
   }
   
-  export const toggleImportanceOf = (id) => {
+export const toggleImportanceOf = (id) => {
     return {
         type: ACTIONS.TOGGLE,
         data: { id }
