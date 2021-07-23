@@ -56,4 +56,4 @@ const reducer = (anecdotes = initialState, action) => {
   }
 }
 
-export default reducer
+export default reducer;
