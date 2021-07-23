@@ -26,6 +26,7 @@ const Anectode = ({anecdote, voteOf, createNotification, clearNotification}) => 
 const AnectodeList = () => {
     const dispatch = useDispatch()
     const anecdotes = useSelector(state => state.anectodes);
+    const filteredAnectodes = useSelector(state => state.filter);
 
     return (
         <div>
@@ -36,6 +37,9 @@ const AnectodeList = () => {
                 }
                 return a.votes < b.votes ? 1 : -1; 
                 }))
+                .filter((data) => {
+                    return data.content.toLowerCase().search(filteredAnectodes) !== -1;
+                })
                 .map(anecdote =>
                     <Anectode 
                         key={anecdote.id}
