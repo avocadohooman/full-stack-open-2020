@@ -20,7 +20,20 @@ export const toggleImportanceOf = (id) => {
     }
 }
 
-const noteReducer = (notes = [], action) => {
+const initialState = [
+  {
+    content: 'reducer defines how redux store works',
+    important: true,
+    id: 1,
+  },
+  {
+    content: 'state of store can contain any data',
+    important: false,
+    id: 2,
+  },
+]
+
+const noteReducer = (notes = initialState, action) => {
     switch (action.type) {
         case ACTIONS.NEW_NOTE:
             return [...notes, action.data];

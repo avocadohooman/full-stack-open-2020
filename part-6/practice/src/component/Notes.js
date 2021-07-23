@@ -14,19 +14,26 @@ const Note = ({ note,  toggleImportance}) => {
 }
 
 const Notes = () => {
-    const notes = useSelector(state => state);
+    const notes = useSelector(state => {
+        if (state.filter === 'ALL') {
+            return state.notes;
+        }
+        return state.filter === 'IMPORTANT'
+            ? state.notes.filter(n => n.important)
+            : state.notes.filter(n => !n.important)
+    });
     const dispatch = useDispatch()
 
     return (
         <ul>
-        {notes.map(note =>
-            <Note 
-                key={note.id}
-                note = {note}
-                toggleImportance = {() => dispatch(toggleImportanceOf(note.id))}
-            />
-        )}
-      </ul>
+            {notes.map(note =>
+                <Note 
+                    key={note.id}
+                    note = {note}
+                    toggleImportance = {() => dispatch(toggleImportanceOf(note.id))}
+                />
+            )}
+        </ul>
     )
 }
 
