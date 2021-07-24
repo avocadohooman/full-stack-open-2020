@@ -10,9 +10,8 @@ const AnectodeForm = () => {
         e.preventDefault();
         const newContent = e.target.anecdote.value;
         e.target.anecdote.value = "";
-        const newAnectode = await anectodeService.createNew(newContent);
-        dispatch(createNew(newAnectode));
-      }
+        dispatch(createNew(newContent));
+    }
 
     return (
         <div>

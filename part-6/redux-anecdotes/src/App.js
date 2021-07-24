@@ -19,9 +19,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    anectodeService
-        .getAll()
-        .then(data => dispatch(initiateAnectodes(data)));
+    dispatch(initiateAnectodes());
   }, []);
 
   return (

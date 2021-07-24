@@ -1,4 +1,5 @@
 import { ACTIONS } from "../App";
+import anectodeService from "../services/anectodeService";
 
 export const voteOf = (id) => {
   return {
@@ -7,17 +8,23 @@ export const voteOf = (id) => {
   }
 }
 
-export const createNew = (data) => {
-  return {
-    type: ACTIONS.CREATE,
-    data,
+export const createNew = data => {
+  return async dispatch => {
+    const newData = await anectodeService.createNew(data);
+    dispatch({
+      type: ACTIONS.CREATE,
+      data: newData,
+    })
   }
 }
 
-export const initiateAnectodes = (anecdotes) => {
-  return {
-    type: ACTIONS.INIATE,
-    data: anecdotes,
+export const initiateAnectodes = () => {
+  return async dispatch => {
+    const allData = await anectodeService.getAll()
+    dispatch ({
+      type: ACTIONS.INIATE,
+      data: allData,
+    })
   }
 }
 
