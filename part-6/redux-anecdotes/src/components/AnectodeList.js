@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { voteOf } from '../reducers/anecdoteReducer';
+import { voteOf, initiateAnectodes } from '../reducers/anecdoteReducer';
 import { createNotification, clearNotification } from '../reducers/notificationReducer';
-
+import anectodeService from '../services/anectodeService';
 
 const Anectode = ({anecdote, voteOf, createNotification, clearNotification}) => {
     return (
@@ -27,7 +27,7 @@ const AnectodeList = () => {
     const dispatch = useDispatch()
     const anecdotes = useSelector(state => state.anectodes);
     const filteredAnectodes = useSelector(state => state.filter);
-
+    
     return (
         <div>
             {anecdotes
