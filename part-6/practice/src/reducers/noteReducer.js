@@ -1,16 +1,23 @@
-import { ACTIONS } from '../index';
+import { ACTIONS } from '../store';
+import noteService from '../services/notes'
 
-export const createNote = (data) => {
-    return {
+export const createNote = content => {
+  return async dispatch => {
+    const newNote = await noteService.createNew(content)
+    dispatch({
       type: ACTIONS.NEW_NOTE,
-      data,
-    }
+      data: newNote,
+    })
+  }
 }
 
-export const initialiseNotes = (notes) => {
-  return {
-    type: ACTIONS.INIT_NOTE,
-    data: notes,
+export const initialiseNotes = () => {
+  return async dispatch => {
+    const notes = await noteService.getAll()
+    dispatch({
+      type: ACTIONS.INIT_NOTE,
+      data: notes,
+    })
   }
 }
 

@@ -1,4 +1,4 @@
-import { ACTIONS } from '../index';
+import { ACTIONS } from '../store';
 
 export const filterChange = filter => {
     return {
