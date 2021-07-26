@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { voteOf, initiateAnectodes } from '../reducers/anecdoteReducer';
-import { createNotification, clearNotification } from '../reducers/notificationReducer';
-import anectodeService from '../services/anectodeService';
+import { voteOf } from '../reducers/anecdoteReducer';
+import { setNotification, clearNotification } from '../reducers/notificationReducer';
 
-const Anectode = ({anecdote, voteOf, createNotification, clearNotification}) => {
+const Anectode = ({anecdote, voteOf, setNotification, clearNotification}) => {
     return (
         <div>
             <div>
@@ -13,11 +12,8 @@ const Anectode = ({anecdote, voteOf, createNotification, clearNotification}) => 
             <div>
                 has {anecdote.votes} vote(s)
                 <button onClick={function() {
-                    createNotification(anecdote.content);
-                    voteOf(anecdote.id);
-                    setTimeout(() => {
-                        clearNotification();
-                    }, 5000); 
+                    setNotification(anecdote.content, 5);
+                    voteOf(anecdote.id); 
                 }}>vote</button>
             </div>
         </div>
@@ -45,7 +41,7 @@ const AnectodeList = () => {
                         key={anecdote.id}
                         anecdote={anecdote}
                         voteOf={() => dispatch(voteOf(anecdote, anecdote.id))}
-                        createNotification={() => dispatch(createNotification(anecdote.content))}
+                        setNotification={() => dispatch(setNotification(anecdote.content, 5))}
                         clearNotification={() => dispatch(clearNotification())}
                     />
             )}

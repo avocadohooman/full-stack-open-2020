@@ -7,10 +7,18 @@ export const clearNotification = () => {
     }
 }
 
-export const createNotification = (notification) => {
-    return {
-        type: ACTIONS.SET_NOTIFICATION,
-        data: `you voted for '${notification}'`
+let timer;
+export const setNotification = (notification, time) => {
+    return async dispatch => {
+        dispatch({
+            type: ACTIONS.SET_NOTIFICATION,
+            data: `you voted for '${notification}'`
+        })
+        clearTimeout(timer);
+        timer = setTimeout(() => dispatch({
+            type: ACTIONS.SET_NOTIFICATION,
+            data: ``
+        }), time * 1000);
     }
 }
 
