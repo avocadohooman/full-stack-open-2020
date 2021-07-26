@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { voteOf } from '../reducers/anecdoteReducer';
 import { setNotification, clearNotification } from '../reducers/notificationReducer';
 
-const Anectode = ({anecdote, voteOf, setNotification, clearNotification}) => {
+const Anectode = ({anecdote, voteOf, setNotification}) => {
     return (
         <div>
             <div>
@@ -42,7 +42,6 @@ const AnectodeList = () => {
                         anecdote={anecdote}
                         voteOf={() => dispatch(voteOf(anecdote, anecdote.id))}
                         setNotification={() => dispatch(setNotification(anecdote.content, 5))}
-                        clearNotification={() => dispatch(clearNotification())}
                     />
             )}
         </div>
