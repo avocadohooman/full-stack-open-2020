@@ -44,7 +44,7 @@ const AnectodeList = () => {
                     <Anectode 
                         key={anecdote.id}
                         anecdote={anecdote}
-                        voteOf={() => dispatch(voteOf(anecdote.id))}
+                        voteOf={() => dispatch(voteOf(anecdote, anecdote.id))}
                         createNotification={() => dispatch(createNotification(anecdote.content))}
                         clearNotification={() => dispatch(clearNotification())}
                     />

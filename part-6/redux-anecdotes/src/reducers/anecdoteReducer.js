@@ -1,10 +1,13 @@
 import { ACTIONS } from "../App";
 import anectodeService from "../services/anectodeService";
 
-export const voteOf = (id) => {
-  return {
-    type: ACTIONS.VOTE,
-    data: { id },
+export const voteOf = (anecdote, id) => {
+  return async dispatch => {
+    const updatedData = await anectodeService.updateVote(anecdote, id);
+    dispatch({
+      type: ACTIONS.VOTE,
+      data: { id },
+    })
   }
 }
 
