@@ -138,7 +138,8 @@ let authors = [
               return books.filter(b => b.author === args.name)
             } else if (args.genre && !args.name) {
               return books.filter(b => b.genres.find(g => g === args.genre))
-            }
+            } else 
+              return books
         },
         getAllAuthors: () => authors
     },
