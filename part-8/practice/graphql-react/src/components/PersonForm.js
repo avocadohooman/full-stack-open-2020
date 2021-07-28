@@ -16,13 +16,6 @@ const PersonForm = ({ setError }) => {
         }
     });
 
-    const [changeNumber] = useMutation(EDIT_NUMBER, {
-      refetchQueries: [{query: ALL_PERSONS}],
-      onError: (error) => {
-        setError(error.graphQLErrors[0].message);
-      }
-    });
-
     const submit = (event) => {
         event.preventDefault();
         createPerson({ variables: {name, phone, street, city}});
