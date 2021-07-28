@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { ALL_PERSONS, CREATE_PERSON } from '../queries/queries';
+import { ALL_PERSONS, CREATE_PERSON, EDIT_NUMBER} from '../queries/queries';
 
 const PersonForm = ({ setError }) => {
 
@@ -16,6 +16,13 @@ const PersonForm = ({ setError }) => {
         }
     });
 
+    const [changeNumber] = useMutation(EDIT_NUMBER, {
+      refetchQueries: [{query: ALL_PERSONS}],
+      onError: (error) => {
+        setError(error.graphQLErrors[0].message);
+      }
+    });
+
     const submit = (event) => {
         event.preventDefault();
         createPerson({ variables: {name, phone, street, city}});
@@ -24,6 +31,7 @@ const PersonForm = ({ setError }) => {
         setStreet('');
         setCity('');
     }
+
     return (
         <div>
         <h2>create new</h2>
@@ -49,6 +57,7 @@ const PersonForm = ({ setError }) => {
             />
           </div>
           <button type='submit'>add</button>
+          <button type='submit'>change number</button>
         </form>
       </div>
     )

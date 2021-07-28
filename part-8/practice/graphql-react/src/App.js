@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import Persons  from './components/Persons';
 import PersonForm from './components/PersonForm';
 import { ALL_PERSONS } from './queries/queries';
+import PhoneForm from './components/PhoneForm';
 
 const App = () => {
   const result = useQuery(ALL_PERSONS);
@@ -24,6 +25,7 @@ const App = () => {
       <Notify errorMessage={errorMessage} />
       <Persons persons={result.data.allPersons} />
       <PersonForm setError={notify}/>
+      <PhoneForm setError={notify}/>
     </div>
   );
 }
