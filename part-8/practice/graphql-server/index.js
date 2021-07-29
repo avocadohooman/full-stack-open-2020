@@ -1,5 +1,4 @@
 const { ApolloServer, UserInputError, gql } = require('apollo-server');
-const { v1: uuid } = require('uuid')
 const Person = require('./models/person');
 const User = require('./models/User');
 const mongoose = require('mongoose');
