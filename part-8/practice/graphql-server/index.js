@@ -73,6 +73,9 @@ const typeDefs = gql
             username: String!
             password: String!
         ): Token
+        addAsFriend(
+            name: String!
+        ): User
     }
 `
 
@@ -91,6 +94,7 @@ const resolvers = {
         me: (root, args, context) => {
             return context.currentUser;
         },
+    },
     Person: {
         name: (root) => root.name,
         phone: (root) => root.phone,
@@ -103,15 +107,21 @@ const resolvers = {
         id: (root) => root.id
     },
     Mutation: {
-        addPerson: async (root, args) => {
+        addPerson: async (root, args, context) => {
             if (await Person.findOne({ name: args.name })) {
                 throw new UserInputError('Name must be unique', {
                   invalidArgs: args.name,
                 })
             }
             const person = new Person({ ...args})
+            const currentUser = context.currentUser;
+            if (!currentUser) {
+                throw new AuthenticationError("not authenticated")
+            }
             try {
-                person.save();
+                await person.save()
+                currentUser.friends = currentUser.friends.concat(person);
+                await currentUser.save()
             } catch (error) {
                 throw new UserInputError(error.message, {
                     invalidArgs: args,
@@ -126,7 +136,7 @@ const resolvers = {
             }
             person.phone = args.phone;
             try {
-                person.save();
+                await person.save();
             } catch (error) {
                 throw new UserInputError(error.message, {
                     invalidArgs: args,
@@ -134,16 +144,30 @@ const resolvers = {
             }
             return person
         },
-        createUser: (root, args) => {
+        createUser: async (root, args) => {
             const user = new User({username: args.username})
             try {
-                user.save();
+                await user.save();
             } catch (error) {
                 throw new UserInputError(error.message, {
                     invalidArgs: args,
                 })
             }
             return user;
+        },
+        addAsFriend: async (root, args, { currentUser }) => {
+            const nonFriendAlready = (person) => 
+                !currentUser.friends.map(f => f._id).includes(person._id);
+            if (!currentUser) {
+                    throw new AuthenticationError("not authenticated")
+            }
+            
+            const person = await Person.findOne({ name: args.name });
+            if (nonFriendAlready(person)) {
+                currentUser.friends = currentUser.friends.concat(person);
+            }
+            await currentUser.save();
+            return currentUser;
         },
         login: async (root, args) => {
             const user = await User.findOne({ username: args.username });
