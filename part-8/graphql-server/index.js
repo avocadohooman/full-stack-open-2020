@@ -98,7 +98,7 @@ const resolvers = {
           console.log('Authors', author);
           await author.save();
         }
-        console.log('Author', author);
+        console.log('Author', author._id);
         const newBook = new Books({...args, author: author._id});
         console.log('New Book', newBook);
         await newBook.save();
