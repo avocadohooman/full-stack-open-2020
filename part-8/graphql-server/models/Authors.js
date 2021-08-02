@@ -4,9 +4,10 @@ const uniqueValidator = require("mongoose-unique-validator");
 const schema = new mongoose.Schema({
     name: {
       type: String,
-      required: true,
+      required: [true, "Authors must have a name"],
       unique: true,
-      minlength: 3
+      uniqueCaseInsensitive: true,
+      minlength: [4, "Author name must be at least 4 characters long"],
     },
     born: {
       type: Number,
