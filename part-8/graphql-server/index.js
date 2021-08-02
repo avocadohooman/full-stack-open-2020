@@ -134,7 +134,22 @@ const resolvers = {
       }
       return user;
     },
-    addBook: async (root, args) => {
+    login: async (root, args) => {
+      const user = await User.findOne({username: args.username});
+      if (!user || args.password !== 'secret') {
+        throw new UserInputError("wrong credentials");
+      }
+      const tokenForUser = {
+        username: user.username,
+        id: user._id
+      }
+      const token = jwt.sign(tokenForUser, JWT_SECRET);
+      return token;
+    },
+    addBook: async (root, args, { currentUser }) => {
+      if (!currentUser) {
+        throw new AuthenticationError("not authenticated")
+      } 
       try {
         if (await Books.findOne({title: args.title})) {
           throw new UserInputError('Title already exists', {
@@ -159,7 +174,10 @@ const resolvers = {
         })
       }
     },
-    editAuthor: async (root, args) => {
+    editAuthor: async (root, args, { currentUser }) => {
+      if (!currentUser) {
+        throw new AuthenticationError("not authenticated")
+      } 
       const author = await Authors.findOne({name: args.name});
       if (!author) {
         throw new UserInputError('Author doesn\'t exist', {
@@ -182,6 +200,14 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: async ({req}) => {
+    const auth = req ? req.headers.authorization : null;
+    if (auth && auth.toLocaleLowerCase('bearer')) {
+      const decodedToken = jwt.verify(auth.substr(7), JWT_SECRET);
+    }
+    const currentUser = await User.findById(decodedToken.id);
+    return {currentUser};
+  }
 })
 
 server.listen().then(({ url }) => {
