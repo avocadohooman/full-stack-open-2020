@@ -170,6 +170,7 @@ const resolvers = {
         },
         login: async (root, args) => {
             const user = await User.findOne({ username: args.username });
+            console.log('args.password', user, args.password);
             if (!user || args.password !== 'secret') {
                 throw new UserInputError("wrong credentials");
             }
@@ -189,10 +190,12 @@ const server = new ApolloServer({
         const auth = req ? req.headers.authorization : null;
         if (auth && auth.toLocaleLowerCase().startsWith('bearer')) {
             const decodedToken = jwt.verify(auth.substring(7), JWT_SECRET);
+            const currentUser = await User.findById(decodedToken.id).populate('friends');
+            return { currentUser }
         }
-        const currentUser = await User.findById(decodedToken.id).populate('friends');
-        return { currentUser }
-    }
+        return null
+    },
+    introspection: true,
 });
 
 
