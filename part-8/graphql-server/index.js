@@ -62,15 +62,35 @@ const resolvers = {
   Query: {
       bookCount: () => Books.collection.countDocuments(),
       authorCount: () => Authors.collection.countDocuments(),
-      getAllBooks: (root, args) => {
-          // if (args.name && args.genre) {
-          //   return books.filter(b => (b.author === args.name && b.genres.find(g => g === args.genre)));
-          // } else if (args.name && !args.genre) {
-          //   return books.filter(b => b.author === args.name)
-          // } else if (args.genre && !args.name) {
-          //   return books.filter(b => b.genres.find(g => g === args.genre))
-          // } else 
-            return Books.find({})
+      getAllBooks: async (root, args) => {
+          let books = await Books.find({});
+          if (args.name && args.genre) {
+            const author = await Authors.findOne({name: args.name});
+            books = await Books.find()
+              .where({
+                author: author ? author._id : null,
+                genres: { $in: [args.genre]},
+              });
+            console.log('Books', books);
+            return books;
+          } 
+          else if (args.name && !args.genre) {
+            const author = await Authors.findOne({name: args.name});
+            books = await Books.find()
+            .where({
+              author: author ? author._id : null,
+            });
+            console.log('Books', books);
+            return books;
+          } else if (args.genre && !args.name) {
+            books = await Books.find()
+            .where({
+              genres: { $in: [args.genre]},
+            });
+            console.log('Books', books);
+            return books;
+          }   
+          return books;
       },
       getAllAuthors: () => Authors.find({})
   },
@@ -109,16 +129,22 @@ const resolvers = {
         })
       }
     },
-    editAuthor: (root, args) => {
-      const author = authors.find(a => a.name === args.name)
+    editAuthor: async (root, args) => {
+      const author = await Authors.findOne({name: args.name});
       if (!author) {
         throw new UserInputError('Author doesn\'t exist', {
           invalidArgs: args.name
         });
       };
-      const updatedAuthor = { ...author, born: args.setBornTo};
-      authors = authors.map(a => a.name === args.name ? updatedAuthor : a);
-      return updatedAuthor;
+      author.born = args.setBornTo;
+      try {
+        await author.save();
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
+      } 
+      return author;
     }
   }
 }
