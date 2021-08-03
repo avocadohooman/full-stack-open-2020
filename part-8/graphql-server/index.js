@@ -117,8 +117,11 @@ const resolvers = {
       name: (root) => root.name,
       id: (root) => root.id,
       born: (root) => root.born,
-      bookCount: (root) => {
-          const amountOfBooks = books.filter(b => b.author === root.name)
+      bookCount: async (root) => {
+          const amountOfBooks = await Books.find()
+          .where({
+            author: root.id
+          });
           return amountOfBooks.length;
       }
   },
@@ -158,14 +161,10 @@ const resolvers = {
         }
         let author = await Authors.findOne({name: args.author})
         if (!author) {
-          console.log('Args name', args.author);
           author = new Authors({ name: args.author })
-          console.log('Authors', author);
           await author.save();
         }
-        console.log('Author', author._id);
         const newBook = new Books({...args, author: author._id});
-        console.log('New Book', newBook);
         await newBook.save();
         return newBook;
       } catch (error) {
@@ -204,9 +203,9 @@ const server = new ApolloServer({
     const auth = req ? req.headers.authorization : null;
     if (auth && auth.toLocaleLowerCase('bearer')) {
       const decodedToken = jwt.verify(auth.substr(7), JWT_SECRET);
+      const currentUser = await User.findById(decodedToken.id);
+      return {currentUser};  
     }
-    const currentUser = await User.findById(decodedToken.id);
-    return {currentUser};
   }
 })
 
