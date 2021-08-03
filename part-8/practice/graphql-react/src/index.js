@@ -7,7 +7,7 @@ import {
   HttpLink, 
   InMemoryCache, 
   gql } from '@apollo/client'
-  import { setContext } from '@apollo/client/link/context';
+import { setContext } from '@apollo/client/link/context';
 
 
 const authLink = setContext((_, { headers }) => {

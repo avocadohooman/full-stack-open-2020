@@ -41,10 +41,10 @@ const App = () => {
     localStorage.clear();
     client.resetStore();
   }
-  
+
   return (
     <div>
-       <button onClick={logout}>
+      <button onClick={logout}>
         logout
       </button>
       <Notify errorMessage={errorMessage} />

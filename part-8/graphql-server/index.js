@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const Authors = require('./models/Authors');
 const Books = require('./models/Books');
+const User = require('./models/User');
 
 require('dotenv').config();
 
@@ -42,7 +43,6 @@ const typeDefs = gql`
     ): Author
     createUser(
       username: String!
-      favoriteGenre: String!
     ): User
     login(
       username: String!
@@ -129,6 +129,7 @@ const resolvers = {
   Mutation: {
     createUser: async (root, args) => {
       const user = new User({username: args.username});
+      console.log('user', user);
       try {
         await user.save();
       } catch (error) {
@@ -140,6 +141,7 @@ const resolvers = {
     },
     login: async (root, args) => {
       const user = await User.findOne({username: args.username});
+      console.log("User", user);
       if (!user || args.password !== 'secret') {
         throw new UserInputError("wrong credentials");
       }
@@ -147,10 +149,10 @@ const resolvers = {
         username: user.username,
         id: user._id
       }
-      const token = jwt.sign(tokenForUser, JWT_SECRET);
-      return token;
+      return { value: jwt.sign(tokenForUser, JWT_SECRET)};
     },
     addBook: async (root, args, { currentUser }) => {
+      console.log('currentuser', currentUser);
       if (!currentUser) {
         throw new AuthenticationError("not authenticated")
       } 
@@ -167,6 +169,7 @@ const resolvers = {
         }
         const newBook = new Books({...args, author: author._id});
         await newBook.save();
+        console.log('new book?', newBook);
         return newBook;
       } catch (error) {
         throw new UserInputError(error.message, {
