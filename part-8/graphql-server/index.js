@@ -82,15 +82,16 @@ const resolvers = {
       bookCount: () => Books.collection.countDocuments(),
       authorCount: () => Authors.collection.countDocuments(),
       getAllBooks: async (root, args) => {
-          let books = await Books.find({});
+          let books = await Books.find().populate("author");
+          console.log('Books', books);
           if (args.name && args.genre) {
             const author = await Authors.findOne({name: args.name});
             books = await Books.find()
               .where({
                 author: author ? author._id : null,
                 genres: { $in: [args.genre]},
-              });
-            console.log('Books', books);
+              })
+              .populate("author");
             return books;
           } 
           else if (args.name && !args.genre) {
@@ -98,15 +99,15 @@ const resolvers = {
             books = await Books.find()
             .where({
               author: author ? author._id : null,
-            });
-            console.log('Books', books);
+            })
+            .populate("author");
             return books;
           } else if (args.genre && !args.name) {
             books = await Books.find()
             .where({
               genres: { $in: [args.genre]},
-            });
-            console.log('Books', books);
+            })
+            .populate("author");
             return books;
           }   
           return books;

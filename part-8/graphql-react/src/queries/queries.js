@@ -13,11 +13,17 @@ export const ALL_AUTHORS = gql `
 
 export const ALL_BOOKS = gql `
     query {
-        getAllBooks {
-            title,
-            author,
-            published
+      getAllBooks {
+        title
+        published
+        genres
+        id
+        author {
+          name
+          bookCount
+          born
         }
+      }
     }
 `
 
