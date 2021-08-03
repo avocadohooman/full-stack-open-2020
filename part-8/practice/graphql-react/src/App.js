@@ -41,6 +41,7 @@ const App = () => {
     localStorage.clear();
     client.resetStore();
   }
+  
   return (
     <div>
        <button onClick={logout}>
