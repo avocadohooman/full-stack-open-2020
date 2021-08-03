@@ -9,12 +9,22 @@ const PersonForm = ({ setError }) => {
     const [street, setStreet] = useState('');
     const [city, setCity] = useState('');
 
-    const [createPerson] = useMutation(CREATE_PERSON, {
-        refetchQueries: [{query: ALL_PERSONS}],
-        onError: (error) => {
-            setError(error.graphQLErrors[0].message);
-        }
-    });
+    const [ createPerson ] = useMutation(CREATE_PERSON, {
+      onError: (error) => {
+        setError(error.graphQLErrors[0].message)
+      },
+      update: (store, response) => {
+        const dataInStore = store.readQuery({ query: ALL_PERSONS })
+        console.log('Data in store', dataInStore);
+        store.writeQuery({
+          query: ALL_PERSONS,
+          data: {
+            ...dataInStore,
+            allPersons: [ ...dataInStore.allPersons, response.data.addPerson ]
+          }
+        })
+      }
+    })
 
     const submit = (event) => {
         event.preventDefault();
