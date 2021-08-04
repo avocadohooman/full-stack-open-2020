@@ -3,6 +3,10 @@ const Person = require('./models/person');
 const User = require('./models/User');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken')
+
+const { PubSub } = require('graphql-subscriptions');
+const pubsub = new PubSub();
+
 require('dotenv').config();
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -76,6 +80,10 @@ const typeDefs = gql
             name: String!
         ): User
     }
+
+    type Subscription {
+        personAdded: Person!
+    }
 `
 
 const resolvers = {
@@ -128,6 +136,7 @@ const resolvers = {
                   })
             }
             console.log('Person', person);
+            pubsub.publish('PERSON_ADDED', { personAdded: person });
             return person;
         },
         editNumber: async (root, args) => {
@@ -182,7 +191,12 @@ const resolvers = {
             }
             return { value: jwt.sign(userForToken, JWT_SECRET)};
         },
-    }
+    },
+    Subscription: {
+        personAdded: {
+          subscribe: () => pubsub.asyncIterator(['PERSON_ADDED'])
+        },
+      },
 }
 
 const server = new ApolloServer({
@@ -196,12 +210,11 @@ const server = new ApolloServer({
             return { currentUser }
         }
     },
-    introspection: true,
 });
 
 
-server.listen().then(({ url }) => {
-    console.log(`Server is running on ${url}`);
+server.listen().then(({ url, subscriptionsUrl }) => {
+    console.log(`Server ready at ${url}`)
+    console.log(`Subscriptions ready at ${subscriptionsUrl}`)
 });
-
 

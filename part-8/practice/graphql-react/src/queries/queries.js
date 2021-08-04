@@ -33,14 +33,24 @@ export const EDIT_NUMBER = gql`
   }
 `
 
-export const ALL_PERSONS = gql `
-  query {
-    allPersons (phone: YES) {
-      name
-      phone
-      id
+const PERSON_DETAILS = gql `
+  fragment PersonDetails on Person {
+    name
+    phone
+    address {
+      street
+      city
     }
   }
+`
+
+export const ALL_PERSONS = gql `
+    query {
+      allPersons (phone: YES) {
+      ...PersonDetails
+      }
+    }
+    ${PERSON_DETAILS}
 `
 
 export const FIND_PERSON = gql `
