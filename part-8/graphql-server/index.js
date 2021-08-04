@@ -169,7 +169,6 @@ const resolvers = {
         }
         const newBook = new Books({...args, author: author._id});
         await newBook.save();
-        console.log('newBook', newBook);
         return newBook;
       } catch (error) {
         throw new UserInputError(error.message, {

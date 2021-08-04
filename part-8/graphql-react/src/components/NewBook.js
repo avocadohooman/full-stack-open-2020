@@ -16,8 +16,6 @@ const NewBook = (props) => {
     },
     update: (store, response) => {
       let dataInStoreBooks = store.readQuery({query: ALL_BOOKS});
-      console.log('data in store before update', dataInStoreBooks);
-      console.log('response data', response.data.addBook);
       store.writeQuery({
         query: ALL_BOOKS,
         data: {
@@ -26,7 +24,6 @@ const NewBook = (props) => {
         }
       });
       dataInStoreBooks = store.readQuery({query: ALL_BOOKS});
-      console.log('data in store after update', dataInStoreBooks);
     }
   })
 
