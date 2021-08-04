@@ -69,7 +69,7 @@ const typeDefs = gql`
   }
 
   type Author {
-      name: String!
+      name: String
       id: ID!
       bookCount: Int
       born: Int
@@ -169,7 +169,7 @@ const resolvers = {
         }
         const newBook = new Books({...args, author: author._id});
         await newBook.save();
-        console.log('new book?', newBook);
+        console.log('newBook', newBook);
         return newBook;
       } catch (error) {
         throw new UserInputError(error.message, {
