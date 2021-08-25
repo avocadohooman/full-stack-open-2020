@@ -6,9 +6,11 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint ./src/**/*.{js,jsx} App.js --no-error-on-unmatched-pattern"
+    "lint": "eslint ./src/**/*.{js,jsx} App.js --no-error-on-unmatched-pattern",
+    "postinstall": "rndebugger-open"  
   },
   "dependencies": {
+    "debugger": "open \"rndebugger://set-debugger-loc?host=localhost&port=8081\"",
     "expo": "~40.0.0",
     "expo-status-bar": "~1.0.3",
     "react": "16.13.1",
@@ -20,7 +22,8 @@
     "@babel/core": "^7.9.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-react": "^7.24.0"
+    "eslint-plugin-react": "^7.24.0",
+    "react-native-debugger-open": "^0.3.25"
   },
   "private": true
 }
