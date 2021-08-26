@@ -14,14 +14,21 @@ const styles = StyleSheet.create({
         padding: 5,
         alignSelf: 'flex-start',
         borderRadius: 5,
+    },
+    marginBottom: {
+        marginBottom: 10,
     }
 });
 
 const RepositoryItemTopInfo = ({item}) => {
     return (
         <View style={styles.topRowColumn}>
-            <Text fontWeight={'bold'} fontSize={'subheading'}>{item.fullName}</Text>
-            <Text color={'textSecondary'}>{item.description}</Text>
+            <View style={styles.marginBottom}>
+                <Text fontWeight={'bold'} fontSize={'subheading'}>{item.fullName}</Text>
+            </View>
+            <View style={styles.marginBottom}>
+                <Text color={'textSecondary'}>{item.description}</Text>
+            </View>
             <View style={styles.languageTag}>
                 <Text fontWeight={'bold'} color={'white'}>{item.language}</Text>
             </View>

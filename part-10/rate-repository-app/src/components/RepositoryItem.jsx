@@ -14,24 +14,22 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     topRow: {
-        display: 'flex',
         flexDirection: 'row',
         maxWidth: 300,
-    },    
-    bottomRow: {
-        flexDirection: 'row',
-        marginLeft: 20,
     },
 });
 
 const RepositoryItem = ({item}) => {
+
     return (
         <View style={styles.container}>
             <View style={styles.topRow}>
                 <Image style={styles.profilePicture} source={{uri: item.ownerAvatarUrl,}}/>
                 <RepositoryItemTopInfo item={item}/>
             </View>
-            <RepositoryItemBottomInfo item={item}/> 
+            <View>
+                <RepositoryItemBottomInfo item={item} />
+            </View>
         </View>
     );
 };
