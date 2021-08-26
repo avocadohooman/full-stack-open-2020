@@ -9,17 +9,20 @@ const styles = StyleSheet.create({
         fontFamily: theme.fonts.main,
         fontWeight: theme.fontWeights.normal,
     },
+    colorWhite: {
+        color: theme.colors.white,
+    },
     colorTextSecondary: {
         color: theme.colors.textSecondary,
     },
     colorPrimary: {
-    color: theme.colors.primary,
+        color: theme.colors.primary,
     },
     fontSizeSubheading: {
-    fontSize: theme.fontSizes.subheading,
+        fontSize: theme.fontSizes.subheading,
     },
     fontWeightBold: {
-    fontWeight: theme.fontWeights.bold,
+        fontWeight: theme.fontWeights.bold,
     },
 });
 
@@ -28,13 +31,14 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
         styles.text,
         color === 'textSecondary' && styles.colorTextSecondary,
         color === 'primary' && styles.colorPrimary,
+        color === 'white' && styles.colorWhite,
         fontSize === 'subheading' && styles.fontSizeSubheading,
         fontWeight === 'bold' && styles.fontWeightBold,
         style,
     ];
 
     return (
-        <NativeText style={textStyle}>{...props}</NativeText>
+        <NativeText style={textStyle} {...props}></NativeText>
     );
 };
 
