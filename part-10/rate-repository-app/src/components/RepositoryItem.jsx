@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import RepositoryItemTopInfo from "./RepositoryItemTopInfo";
+import RepositoryItemBottomInfo from "./RepositoryItemBottomInfo";
 
 const styles = StyleSheet.create({
     container: {
@@ -10,18 +11,16 @@ const styles = StyleSheet.create({
     profilePicture: {
         width: 50,
         height: 50,
+        borderRadius: 5,
     },
     topRow: {
         display: 'flex',
         flexDirection: 'row',
         maxWidth: 300,
-    },
-    topRowColumn: {
-        flexDirection: 'column',
-    },
+    },    
     bottomRow: {
-        display: 'flex',
         flexDirection: 'row',
+        marginLeft: 20,
     },
 });
 
@@ -32,10 +31,7 @@ const RepositoryItem = ({item}) => {
                 <Image style={styles.profilePicture} source={{uri: item.ownerAvatarUrl,}}/>
                 <RepositoryItemTopInfo item={item}/>
             </View>
-            <Text>Stars: {item.stargazersCount}</Text>
-            <Text>Forks: {item.forksCount}</Text>
-            <Text>Reviews: {item.reviewCount}</Text>
-            <Text>Rating: {item.ratingAverage}</Text>
+            <RepositoryItemBottomInfo item={item}/> 
         </View>
     );
 };
