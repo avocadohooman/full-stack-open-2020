@@ -1,19 +1,37 @@
 import React from "react";
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
+import RepositoryItemTopInfo from "./RepositoryItemTopInfo";
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
-        backgroundColor: '#f9c2ff',
+        padding: 10,
+        backgroundColor: 'white',
+    },
+    profilePicture: {
+        width: 50,
+        height: 50,
+    },
+    topRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        maxWidth: 300,
+    },
+    topRowColumn: {
+        flexDirection: 'column',
+    },
+    bottomRow: {
+        display: 'flex',
+        flexDirection: 'row',
     },
 });
 
 const RepositoryItem = ({item}) => {
     return (
         <View style={styles.container}>
-            <Text>Full name: {item.fullName}</Text>
-            <Text>Description: {item.description}</Text>
-            <Text>Language: {item.language}</Text>
+            <View style={styles.topRow}>
+                <Image style={styles.profilePicture} source={{uri: item.ownerAvatarUrl,}}/>
+                <RepositoryItemTopInfo item={item}/>
+            </View>
             <Text>Stars: {item.stargazersCount}</Text>
             <Text>Forks: {item.forksCount}</Text>
             <Text>Reviews: {item.reviewCount}</Text>
