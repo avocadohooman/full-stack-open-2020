@@ -1,5 +1,5 @@
 import React from "react";  
-import { StyleSheet, Pressable } from 'react-native';
+import { StyleSheet, Pressable, ScrollView } from 'react-native';
 import Text from './Text';
 import { Link } from "react-router-native";
 
@@ -8,6 +8,13 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         paddingLeft: 10,
         paddingBottom: 20,
+    },
+    scrollView: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    itemMargin: {
+        marginRight: 20,
     }
 });
 
@@ -18,16 +25,18 @@ const AppBarTab = () => {
 
     return (
         <Pressable style={styles.appBar}>
-            <Link to='/'>
-                <Text color={'white'} fontWeight={'bold'} fontSize={'subheading'}> 
-                    {repoLabel}
-                </Text>
-            </Link>
-            <Link to='signIn'>
-                <Text color={'white'} fontWeight={'bold'} fontSize={'subheading'}> 
-                    {signInLabel}
-                </Text>
-            </Link>
+            <ScrollView style={styles.scrollView} horizontal>
+                <Link to='/'>
+                    <Text style={styles.itemMargin} color={'white'} fontWeight={'bold'} fontSize={'subheading'}> 
+                        {repoLabel}
+                    </Text>
+                </Link>
+                <Link to='signIn'>
+                    <Text color={'white'} fontWeight={'bold'} fontSize={'subheading'}> 
+                        {signInLabel}
+                    </Text>
+                </Link>
+            </ScrollView>
         </Pressable>
     );
 };
