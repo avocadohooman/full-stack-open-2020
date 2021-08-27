@@ -9,6 +9,8 @@ import Text from './Text';
 const styles = StyleSheet.create({
     errorText: {
         marginTop: 5,
+        color: '#d73a4a',
+        marginLeft: 10,
     },
 });
 
@@ -23,7 +25,7 @@ const FormikTextInput = ({name, ...props}) => {
             onBlue={() => helpers.setTouched(true)}
             value={field.value}
             error={showError}
-            secureTextEntry={true}
+            secureTextEntry={name === 'password' ? true : false}
             {...props}
           />
           {showError && <Text style={styles.errorText}>{meta.error}</Text>}
