@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 20,
         marginLeft: 20,
+        marginRight: 20,
         marginBottom: 10,
     },
     bottomColumn: {
