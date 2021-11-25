@@ -1,0 +1,22 @@
+Script started on Thu Nov 25 14:32:45 2021
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                   [0m[27m[24m[Jgerhard.molin@WD00004 part12-containers-applications % [K[?2004hexitecho "hello"[12Dnpm run  start[14Decho "hello"  [12Dexit        [8D    ddocker un   run -it ubuntu bash[?2004l
+]0;root@5b5af0b2c08a: /root@5b5af0b2c08a:/# [K]0;root@5b5af0b2c08a: /root@5b5af0b2c08a:/# pwd
+/
+]0;root@5b5af0b2c08a: /root@5b5af0b2c08a:/# cd usr/s
+sbin/  share/ src/   
+]0;root@5b5af0b2c08a: /root@5b5af0b2c08a:/# cd usr/src/a 
+]0;root@5b5af0b2c08a: /usr/srcroot@5b5af0b2c08a:/usr/src# ls
+]0;root@5b5af0b2c08a: /usr/srcroot@5b5af0b2c08a:/usr/src# mkdir app
+]0;root@5b5af0b2c08a: /usr/srcroot@5b5af0b2c08a:/usr/src# ls  pwd
+/usr/src
+]0;root@5b5af0b2c08a: /usr/srcroot@5b5af0b2c08a:/usr/src# cd app/
+]0;root@5b5af0b2c08a: /usr/src/approot@5b5af0b2c08a:/usr/src/app# pwd
+/usr/src/app
+]0;root@5b5af0b2c08a: /usr/src/approot@5b5af0b2c08a:/usr/src/app# echo > index.js
+]0;root@5b5af0b2c08a: /usr/src/approot@5b5af0b2c08a:/usr/src/app# ls
+index.js
+]0;root@5b5af0b2c08a: /usr/src/approot@5b5af0b2c08a:/usr/src/app# exit
+exit
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                   [0m[27m[24m[Jgerhard.molin@WD00004 part12-containers-applications % [K[?2004heexit[?2004l
+
+Script done on Thu Nov 25 14:33:53 2021
